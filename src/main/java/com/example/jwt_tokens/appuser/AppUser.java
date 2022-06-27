@@ -1,6 +1,6 @@
-package com.example.jwt_tokens.user;
+package com.example.jwt_tokens.appuser;
 
-import com.example.jwt_tokens.Role;
+import com.example.jwt_tokens.role.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

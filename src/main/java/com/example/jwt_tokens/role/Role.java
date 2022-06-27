@@ -1,4 +1,4 @@
-package com.example.jwt_tokens;
+package com.example.jwt_tokens.role;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,13 +15,13 @@ import javax.persistence.*;
 public class Role {
     @Id
     @SequenceGenerator(
-            name = "user_sequence",
-            sequenceName = "user_sequence",
+            name = "role_sequence",
+            sequenceName = "role_sequence",
             initialValue = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "user_sequence"
+            generator = "role_sequence"
     )
     private Long id;
     private String name;
