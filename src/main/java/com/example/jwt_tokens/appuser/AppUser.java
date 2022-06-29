@@ -30,6 +30,6 @@ public class AppUser {
     private String name;
     private String userName;
     private String password;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Role> roles = new ArrayList<>();
 }
