@@ -15,15 +15,20 @@ public class AppUserService {
     private final AppUserRepository appUserRepository;
     private final RoleRepository roleRepository;
 
-    public void saveUser(AppUser user) {
-        appUserRepository.save(user);
+    public AppUser saveUser(AppUser user) {
+        return appUserRepository.save(user);
     }
 
-    public void saveRole(Role role) {
-        roleRepository.save(role);
+    public Role saveRole(Role role) {
+        return roleRepository.save(role);
     }
 
-    public void addRoleToUser(AppUser user, Role role) {
+    public void addRoleToUser(String username, String roleName) {
+        AppUser user = appUserRepository.findByUserName(username)
+                .orElseThrow(() -> new IllegalStateException("User " + username + "not found"));
+        Role role = roleRepository.findByName(roleName)
+                .orElseThrow(() -> new IllegalStateException("Role " + roleName + "not found"));
+
         user.getRoles().add(role);
         appUserRepository.save(user);
     }
