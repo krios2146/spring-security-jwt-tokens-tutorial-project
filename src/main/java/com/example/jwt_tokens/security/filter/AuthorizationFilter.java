@@ -29,7 +29,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class AuthorizationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if (request.getServletPath().equals("/api/login")) {
+        if (request.getServletPath().equals("/api/login") || request.getServletPath().equals("/api/token/refresh")) {
             filterChain.doFilter(request, response);
         } else {
             String authorizationHeader = request.getHeader(AUTHORIZATION);
@@ -58,11 +58,10 @@ public class AuthorizationFilter extends OncePerRequestFilter {
                 } catch (Exception e) {
                     response.setHeader("Error", e.getMessage());
                     response.setStatus(FORBIDDEN.value());
-
+                    response.setContentType(APPLICATION_JSON_VALUE);
 
                     Map<String, String> error = new HashMap<>();
                     error.put("error_message", e.getMessage());
-                    response.setContentType(APPLICATION_JSON_VALUE);
 
                     new ObjectMapper().writeValue(response.getOutputStream(), error);
                 }
