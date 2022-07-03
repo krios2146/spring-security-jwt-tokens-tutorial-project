@@ -36,10 +36,10 @@ public class AppUserController {
         return ResponseEntity.ok().body(appUserService.getUsers());
     }
 
-    @PostMapping(path = "/user/save")
-    public ResponseEntity<AppUser> saveUser(@RequestBody AppUser user) {
+    @PostMapping(path = "/user/register")
+    public ResponseEntity<AppUser> register(@RequestBody AppUser user) {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/user/save").toUriString());
-        return ResponseEntity.created(uri).body(appUserService.saveUser(user));
+        return ResponseEntity.created(uri).body(appUserService.register(user));
     }
 
     @PostMapping(path = "/role/save")
