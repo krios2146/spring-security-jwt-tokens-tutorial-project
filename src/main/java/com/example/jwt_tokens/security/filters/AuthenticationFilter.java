@@ -1,4 +1,4 @@
-package com.example.jwt_tokens.security.filter;
+package com.example.jwt_tokens.security.filters;
 
 import com.example.jwt_tokens.security.token.TokenBuilder;
 import com.fasterxml.jackson.databind.ObjectMapper;
