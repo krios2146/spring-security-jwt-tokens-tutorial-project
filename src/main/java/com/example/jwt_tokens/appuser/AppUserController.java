@@ -5,9 +5,9 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.jwt_tokens.role.Role;
+import com.example.jwt_tokens.security.token.TokenBuilder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -16,11 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URI;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
@@ -72,18 +70,13 @@ public class AppUserController {
                 AppUser user = appUserService.getUser(username)
                         .orElseThrow(() -> new IllegalStateException("User " + username + " not found"));
 
-                String accessToken = JWT.create()
-                        .withSubject(user.getUserName())
-                        .withExpiresAt(new Date(System.currentTimeMillis() + 5 * 60 * 1000))
-                        .withIssuer(request.getRequestURI().toString())
-                        .withClaim("roles", user.getRoles().stream().map(Role::getName).collect(Collectors.toList()))
-                        .sign(algorithm);
+                String accessToken = TokenBuilder.buildAccessToken(user, request);
 
                 Map<String, String> tokens = new HashMap<>();
                 tokens.put("access_token", accessToken);
                 tokens.put("refresh_token", refreshToken);
 
-                response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+                response.setContentType(APPLICATION_JSON_VALUE);
 
                 new ObjectMapper().writeValue(response.getOutputStream(), tokens);
 

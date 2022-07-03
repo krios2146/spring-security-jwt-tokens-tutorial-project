@@ -2,7 +2,6 @@ package com.example.jwt_tokens.appuser;
 
 import com.example.jwt_tokens.role.Role;
 import com.example.jwt_tokens.role.RoleRepository;
-import com.example.jwt_tokens.security.PasswordEncoder;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
